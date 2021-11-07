@@ -9,6 +9,8 @@ namespace API.FluentValidation
         {
             RuleFor(x => x.ItemSize).NotNull();
             RuleFor(x => x.PageSize).NotNull();
+
+            RuleFor(x => x.ItemSize).GreaterThan(0);
         }
     }
 }
