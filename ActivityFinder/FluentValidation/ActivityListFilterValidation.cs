@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using API.Concrate;
+using FluentValidation;
 
 namespace API.FluentValidation
 {
-    public class ActivityListFilterValidation
+    public class ActivityListFilterValidation : AbstractValidator<ActivityListFilter>
     {
+        public ActivityListFilterValidation()
+        {
+            RuleFor(x => x.ItemSize).NotNull();
+            RuleFor(x => x.PageSize).NotNull();
+        }
     }
 }

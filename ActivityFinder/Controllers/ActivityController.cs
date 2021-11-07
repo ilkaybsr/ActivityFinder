@@ -34,11 +34,11 @@ namespace ActivityFinder.Controllers
 
         }
 
-        [HttpGet]
+        [HttpPost]
         [ProducesResponseType(typeof(List<ActivityDTO>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> List([FromBody] ActivityListFilter filter)
         {
-            var result = await _activityCollectorService.GetAllActivities(filter.PageSize, filter.ItemSize);
+            var result = await _activityCollectorService.GetAllActivities(filter.PageSize.Value, filter.ItemSize.Value);
 
             return Ok(result);
         }
