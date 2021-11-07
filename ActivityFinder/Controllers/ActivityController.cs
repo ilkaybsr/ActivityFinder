@@ -1,6 +1,10 @@
-﻿using Business.Concrate;
+﻿using API.Concrate;
+using Business.Concrate;
+using Business.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace ActivityFinder.Controllers
@@ -20,19 +24,21 @@ namespace ActivityFinder.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(ActivityDTO), (int)HttpStatusCode.OK)]
         [Route(nameof(Collect))]
-        public async Task<IActionResult> Collect()
+        public async Task<IActionResult> Collect(int limit = 10)
         {
-            var result = await _activityCollectorService.Collect();
+            var result = await _activityCollectorService.Collect(limit);
 
             return Ok(result);
 
         }
 
         [HttpGet]
-        public async Task<IActionResult> List()
+        [ProducesResponseType(typeof(List<ActivityDTO>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> List([FromBody] ActivityListFilter filter)
         {
-            var result = await _activityCollectorService.GetAllActivities();
+            var result = await _activityCollectorService.GetAllActivities(filter.PageSize, filter.ItemSize);
 
             return Ok(result);
         }

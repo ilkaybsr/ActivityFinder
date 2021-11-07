@@ -18,7 +18,7 @@ namespace Business.Concrate
             _activityRepository = activityRepository;
         }
 
-        public async Task<List<ActivityDTO>> Collect()
+        public async Task<List<ActivityDTO>> Collect(int limit)
         {
             var client = new RestClient("https://biletinial.com/tiyatro");
             client.Timeout = 60000;
@@ -48,9 +48,7 @@ namespace Business.Concrate
 
                 var aElements = doc.DocumentNode.SelectNodes("//a[@class='flex directionColumn justifyStart alignStart']");
 
-                int maxLimit = 10; //aElements.Count;
-
-                for (int i = 0; i < maxLimit; i++)
+                for (int i = 0; i < limit; i++)
                 {
                     var activityDetails = getActivityDetails("https://biletinial.com" + aElements[i].Attributes["href"]?.Value);
                     activites.Add(activityDetails);
@@ -66,8 +64,9 @@ namespace Business.Concrate
             return null;
         }
 
-        public async Task<List<ActivityDTO>> GetAllActivities()
+        public async Task<List<ActivityDTO>> GetAllActivities(int pageIndex, int itemSize)
         {
+            //todo tablodan veri çektikten sonra pagination yaptık, bu doğru bir yaklaşım değil (düzenle)
             var all = (await _activityRepository.GetAllAsync()).Select(x => new ActivityDTO
             {
                 Name = x.Name,
@@ -76,7 +75,10 @@ namespace Business.Concrate
                 Location = x.Location,
                 Category = x.Category,
                 Description = x.Description,
-            }).ToList();
+            })
+                .Skip(pageIndex * itemSize)
+                .Take(itemSize)
+                .ToList();
 
             return all;
         }

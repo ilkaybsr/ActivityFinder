@@ -8,7 +8,6 @@ namespace DataAccess
     {
         public DbSet<Activity> Activites { get; set; }
 
-
         public ActivityContext(DbContextOptions<ActivityContext> options)
             : base(options)
         {
@@ -17,6 +16,7 @@ namespace DataAccess
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Activity>().ToTable("Activites");
             builder.ApplyConfiguration(new ActivityEntityConfiguration());
         }
     }
