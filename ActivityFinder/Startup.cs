@@ -2,9 +2,11 @@ using Business.Concrate;
 using DataAccess;
 using DataAccess.Abstracts;
 using DataAccess.Concrate;
+using DataAccess.Entities;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,6 +39,8 @@ namespace ActivityFinder
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddDbContext<ActivityContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ActivityContext>().AddDefaultTokenProviders();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +56,8 @@ namespace ActivityFinder
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
