@@ -39,7 +39,7 @@ namespace ActivityFinder
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddDbContext<ActivityContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
-            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ActivityContext>().AddDefaultTokenProviders();
+            services.AddIdentity<User, Role>().AddEntityFrameworkStores<ActivityContext>().AddDefaultTokenProviders();
 
         }
 
