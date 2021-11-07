@@ -22,6 +22,8 @@ namespace DataAccess.EntityConfigurations
 
             builder.Property(x => x.Description);
 
+            builder.ToTable("Activities");
+
         }
     }
 }
