@@ -15,5 +15,6 @@ namespace DataAccess.Abstracts
         Task AddRangeAsync(IEnumerable<TEntity> entities);
         void Remove(TEntity entity);
         void RemoveRange(IEnumerable<TEntity> entities);
+        Task<int> SaveChangesAsync();
     }
 }

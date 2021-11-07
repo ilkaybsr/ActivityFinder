@@ -58,6 +58,8 @@ namespace Business.Concrate
                 activites.ForEach(x => willBeAddForDB.Add(Activity.Create(x.Name, x.Description, x.Address, x.Category, x.Location, x.Date)));
 
                 await _activityRepository.AddRangeAsync(willBeAddForDB);
+                await _activityRepository.SaveChangesAsync();
+
                 return activites;
             }
 

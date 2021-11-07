@@ -51,6 +51,11 @@ namespace DataAccess.Concrate
             Context.Set<TEntity>().RemoveRange(entities);
         }
 
+        public async Task<int> SaveChangesAsync()
+        {
+            return await Context.SaveChangesAsync();
+        }
+
         public Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return Context.Set<TEntity>().SingleOrDefaultAsync(predicate);
