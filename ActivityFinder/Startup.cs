@@ -1,3 +1,5 @@
+using API.Utilities;
+using Business.Abstracts;
 using Business.Concrate;
 using DataAccess;
 using DataAccess.Abstracts;
@@ -34,7 +36,7 @@ namespace ActivityFinder
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ActivityFinder", Version = "v1" });
             });
 
-            services.AddScoped<ActivityCollectorService>();
+            services.AddScoped<IActivityCollectorService, ActivityCollectorService>();
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
@@ -52,6 +54,8 @@ namespace ActivityFinder
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ActivityFinder v1"));
             }
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseHttpsRedirection();
 

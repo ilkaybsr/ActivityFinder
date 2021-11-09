@@ -1,4 +1,5 @@
-﻿using Business.DTO;
+﻿using Business.Abstracts;
+using Business.DTO;
 using DataAccess.Abstracts;
 using DataAccess.Entities;
 using HtmlAgilityPack;
@@ -10,7 +11,7 @@ using System.Web;
 
 namespace Business.Concrate
 {
-    public class ActivityCollectorService
+    public class ActivityCollectorService : IActivityCollectorService
     {
         private readonly IGenericRepository<Activity> _activityRepository;
         public ActivityCollectorService(IGenericRepository<Activity> activityRepository)

@@ -3,7 +3,7 @@ using System;
 
 namespace DataAccess.Entities
 {
-    public class User : IdentityUser<Guid>
+    public class User : IdentityUser<Guid>, IEntity
     {
     }
 }
