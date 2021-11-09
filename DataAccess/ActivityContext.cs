@@ -15,11 +15,13 @@ namespace DataAccess
         }
 
         public DbSet<Activity> Activites { get; set; }
+        public DbSet<Error> Errors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Activity>().ToTable("Activites");
             builder.ApplyConfiguration(new ActivityEntityConfiguration());
+            builder.ApplyConfiguration(new ErrorEntityConfiguration());
 
             base.OnModelCreating(builder);
         }

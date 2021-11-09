@@ -5,6 +5,8 @@ namespace DataAccess.Entities
 {
     public class Error : IEntity
     {
+        public Guid Id { get; private set; }
+
         public DateTime CreatedAt { get; private set; }
 
         public string Message { get; private set; }
@@ -21,6 +23,7 @@ namespace DataAccess.Entities
 
             return new Error
             {
+                Id = Guid.NewGuid(),
                 Message = message,
                 CreatedAt = DateTime.UtcNow
             };
