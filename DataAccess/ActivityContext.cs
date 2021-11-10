@@ -19,7 +19,6 @@ namespace DataAccess
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Activity>().ToTable("Activites");
             builder.ApplyConfiguration(new ActivityEntityConfiguration());
             builder.ApplyConfiguration(new ErrorEntityConfiguration());
 
