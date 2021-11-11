@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Business.Abstracts;
+using DataAccess.Entities;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -26,12 +29,16 @@ namespace API.Utilities
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext httpContext, Exception ex)
+        private static async Task HandleExceptionAsync(HttpContext httpContext, Exception ex)
         {
+            var errorHandlingService = httpContext.RequestServices.GetRequiredService<IErrorHandlingService>();
+
+            await errorHandlingService.SaveErrorToDB(ex.Message);
+
             httpContext.Response.ContentType = "application/json";
             httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             var now = DateTime.UtcNow;
-            return httpContext.Response.WriteAsync(new
+            await httpContext.Response.WriteAsync(new
             {
                 StatusCode = httpContext.Response.StatusCode,
                 Message = ex.Message

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,13 +29,14 @@ namespace Business.Concrate
         {
             var newUser = await _userManager.CreateAsync(new User()
             {
+                UserName = createUser.Email,
                 Email = createUser.Email,
             }, createUser.Password);
 
             if (newUser.Succeeded)
                 return true;
             else
-                throw new System.Exception(string.Join(",", newUser.Errors));
+                throw new Exception(string.Join(",", newUser.Errors.Select(x => x.Description)));
         }
 
         public async Task<UserLoginResult> Login(UserLoginViewModel login)
@@ -68,7 +70,7 @@ namespace Business.Concrate
                     ExpireDate = token.ValidTo
                 });
             }
-            else return null;
+            else throw new Exception("Email or Password not valid!");
         }
 
     }
