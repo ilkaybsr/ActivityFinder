@@ -1,6 +1,8 @@
 ﻿using API.Concrate;
+using Business.Abstracts;
 using Business.Concrate;
 using Business.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -9,15 +11,16 @@ using System.Threading.Tasks;
 
 namespace ActivityFinder.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ActivityController : ControllerBase
     {
         private readonly ILogger<ActivityController> _logger;
-        private readonly ActivityCollectorService _activityCollectorService;
+        private readonly IActivityCollectorService _activityCollectorService;
 
         public ActivityController(ILogger<ActivityController> logger,
-            ActivityCollectorService activityCollectorService)
+            IActivityCollectorService activityCollectorService)
         {
             _logger = logger;
             _activityCollectorService = activityCollectorService;

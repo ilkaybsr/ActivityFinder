@@ -41,10 +41,8 @@ namespace ActivityFinder
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ActivityFinder", Version = "v1" });
             });
 
-            services.AddScoped<IActivityCollectorService, ActivityCollectorService>();
-            services.AddScoped<IErrorHandlingService, ErrorHandlingService>();
-            services.AddScoped<IUserService, UserService>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
 
             services.AddDbContext<ActivityContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
             services.AddIdentity<User, Role>(options =>
@@ -73,6 +71,10 @@ namespace ActivityFinder
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("JwtToken:authKEYforJWT"))
             };
             });
+
+            services.AddScoped<IActivityCollectorService, ActivityCollectorService>();
+            services.AddScoped<IErrorHandlingService, ErrorHandlingService>();
+            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
