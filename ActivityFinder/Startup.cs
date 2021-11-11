@@ -70,8 +70,8 @@ namespace ActivityFinder
                     ValidateAudience = true,
                     ValidAudience = "http://google.com",
                     ValidIssuer = "http://google.com",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SecureKEY"))
-                };
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("JwtToken:authKEYforJWT"))
+            };
             });
         }
 

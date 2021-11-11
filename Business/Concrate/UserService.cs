@@ -54,7 +54,7 @@ namespace Business.Concrate
                         new Claim(JwtRegisteredClaimNames.GivenName, user.UserName),
                     };
 
-                var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SecureKEY"));
+                var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("JwtToken:authKEYforJWT"));
 
                 var token = new JwtSecurityToken(
                     issuer: "http://google.com",
