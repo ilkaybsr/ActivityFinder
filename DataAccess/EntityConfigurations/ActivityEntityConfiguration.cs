@@ -24,6 +24,7 @@ namespace DataAccess.EntityConfigurations
 
             builder.ToTable("Activities");
 
+
         }
     }
 }

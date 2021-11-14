@@ -6,6 +6,11 @@ namespace DataAccess.Entities
 {
     public class User : IdentityUser<Guid>, IEntity
     {
-        public ICollection<UserActivity> Bookmarks { get; set; }
+        public ICollection<UserActivity> Bookmarks { get; private set; }
+
+        public User()
+        {
+            Bookmarks ??= new List<UserActivity>();
+        }
     }
 }

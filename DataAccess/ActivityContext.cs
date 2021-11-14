@@ -21,9 +21,10 @@ namespace DataAccess
         {
             builder.ApplyConfiguration(new ActivityEntityConfiguration());
             builder.ApplyConfiguration(new ErrorEntityConfiguration());
+            builder.ApplyConfiguration(new UserActivityEntityTypeConfiguration());
 
             base.OnModelCreating(builder);
-
+            //neden böyle?
             builder.ApplyConfiguration(new UserEntityTypeConfiguration());
         }
     }

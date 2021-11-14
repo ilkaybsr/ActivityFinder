@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Business.Abstracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -9,19 +11,42 @@ namespace API.Controllers
     [ApiController]
     public class UserActivityController : ControllerBase
     {
-        public Task<IActionResult> BookMark(int Id)
+        private readonly IUserActivityService _userActivityService;
+
+        public UserActivityController(IUserActivityService userActivityService)
         {
-            var userId = Guid.TryParse();
+            _userActivityService = userActivityService;
         }
 
-        public Task<IActionResult> RemoveBookmark(int Id)
+        public async Task<IActionResult> BookMark(int activityId)
         {
+            if (!Guid.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out Guid userId))
+                return Unauthorized();
 
+            await _userActivityService.Bookmark(userId, activityId);
+
+            return Ok();
         }
 
-        public Task<IActionResult> List()
+        public async Task<IActionResult> RemoveBookmark(int activityId)
         {
+            if (!Guid.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out Guid userId))
+                return Unauthorized();
 
+
+            await _userActivityService.Remove(userId, activityId);
+
+            return Ok();
+        }
+
+        public async Task<IActionResult> List()
+        {
+            if (!Guid.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out Guid userId))
+                return Unauthorized();
+
+            var result = await _userActivityService.List(userId);
+
+            return Ok(result);
         }
     }
 }
