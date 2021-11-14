@@ -9,6 +9,7 @@ namespace API.Controllers
 {
     [Authorize]
     [ApiController]
+    [Route("[controller]")]
     public class UserActivityController : ControllerBase
     {
         private readonly IUserActivityService _userActivityService;
@@ -18,6 +19,8 @@ namespace API.Controllers
             _userActivityService = userActivityService;
         }
 
+        [Route(nameof(BookMark))]
+        [HttpPost]
         public async Task<IActionResult> BookMark(int activityId)
         {
             if (!Guid.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out Guid userId))
@@ -28,18 +31,22 @@ namespace API.Controllers
             return Ok();
         }
 
-        public async Task<IActionResult> RemoveBookmark(int activityId)
+        [Route(nameof(RemoveBookmark))]
+        [HttpPost]
+        public async Task<IActionResult> RemoveBookmark(int Id)
         {
             if (!Guid.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out Guid userId))
                 return Unauthorized();
 
 
-            await _userActivityService.Remove(activityId);
+            await _userActivityService.Remove(Id);
 
             return Ok();
         }
 
-        public async Task<IActionResult> List()
+        [Route(nameof(BookMarkList))]
+        [HttpGet]
+        public async Task<IActionResult> BookMarkList()
         {
             if (!Guid.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out Guid userId))
                 return Unauthorized();

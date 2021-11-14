@@ -26,6 +26,11 @@ namespace DataAccess.Concrate
             await Context.Set<TEntity>().AddRangeAsync(entities);
         }
 
+        public IQueryable<TEntity> AsQueryable()
+        {
+            return Context.Set<TEntity>().AsQueryable();
+        }
+
         public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
             return Context.Set<TEntity>().Where(predicate);

@@ -61,7 +61,16 @@ namespace Business.Concrate
                 await _activityRepository.AddRangeAsync(willBeAddForDB);
                 await _activityRepository.SaveChangesAsync();
 
-                return activites;
+                return willBeAddForDB.Select(x => new ActivityDTO
+                {
+                    Id = x.Id,
+                    Address = x.Address,
+                    Category = x.Category,
+                    Date = x.Date,
+                    Description = x.Description,
+                    Location = x.Location,
+                    Name = x.Name
+                }).ToList();
             }
 
             return null;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -7,6 +8,7 @@ namespace DataAccess.Abstracts
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {
+        IQueryable<TEntity> AsQueryable();
         ValueTask<TEntity> GetByIdAsync(int id);
         Task<IEnumerable<TEntity>> GetAllAsync();
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);

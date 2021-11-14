@@ -75,6 +75,7 @@ namespace ActivityFinder
             services.AddScoped<IActivityCollectorService, ActivityCollectorService>();
             services.AddScoped<IErrorHandlingService, ErrorHandlingService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserActivityService, UserActivityService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -3,6 +3,7 @@ using Business.DTO;
 using DataAccess.Abstracts;
 using DataAccess.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -53,20 +54,20 @@ namespace Business.Concrate
 
         public async Task<List<ActivityDTO>> List(Guid userId)
         {
-            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var userActivities = _userActiviyRepository.AsQueryable().Include(x => x.Activity)
+                .Where(x => x.UserId == userId)
+                .Select(x => new ActivityDTO
+                {
+                    Id = x.Id,
+                    Address = x.Activity.Address,
+                    Category = x.Activity.Category,
+                    Date = x.Activity.Date,
+                    Description = x.Activity.Description,
+                    Location = x.Activity.Location,
+                    Name = x.Activity.Name
+                }).ToList();
 
-            if (user is null)
-                throw new Exception("User not found");
-
-            return user.Bookmarks.Select(x => new ActivityDTO
-            {
-                Address = x.Activity.Address,
-                Category = x.Activity.Category,
-                Date = x.Activity.Date,
-                Description = x.Activity.Description,
-                Location = x.Activity.Location,
-                Name = x.Activity.Name
-            }).ToList();
+            return userActivities;
         }
 
         public async Task<bool> Remove(int Id)

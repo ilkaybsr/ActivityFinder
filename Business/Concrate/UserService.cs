@@ -51,6 +51,7 @@ namespace Business.Concrate
                 var claims = new[]
                     {
                         new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                        new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
                         new Claim(JwtRegisteredClaimNames.GivenName, user.UserName),
                     };
 
