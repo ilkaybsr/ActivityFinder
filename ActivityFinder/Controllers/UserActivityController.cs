@@ -34,7 +34,7 @@ namespace API.Controllers
                 return Unauthorized();
 
 
-            await _userActivityService.Remove(userId, activityId);
+            await _userActivityService.Remove(activityId);
 
             return Ok();
         }
