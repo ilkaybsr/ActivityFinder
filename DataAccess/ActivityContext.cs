@@ -23,6 +23,8 @@ namespace DataAccess
             builder.ApplyConfiguration(new ErrorEntityConfiguration());
 
             base.OnModelCreating(builder);
+
+            builder.ApplyConfiguration(new UserEntityTypeConfiguration());
         }
     }
 }
